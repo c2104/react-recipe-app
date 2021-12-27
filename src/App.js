@@ -51,7 +51,7 @@ function App() {
             image={recipe.recipe.image}
             ingredients={recipe.recipe.ingredients}
           />
-        ))};
+        ))}
       </div>
     </div>
   );
