@@ -3,8 +3,8 @@ import './App.css';
 import Recipe from './Recipe';
 
 function App() {
-  const APP_ID = '2b6b2534';
-  const APP_KEY = '5f39e54d9c641d459f8da669fe038ad2';
+  const APP_ID = process.env.REACT_APP_APP_ID;
+  const APP_KEY = process.env.REACT_APP_APP_KEY;
 
   const inputRef = useRef(null);
   useEffect(() => {
@@ -20,19 +20,9 @@ function App() {
     const data = await response.json();
 
     //材料の重複を削除
-    for (let i = 0; i < data.hits.length; i++) {
-      //材料取得
-      const ingredients = data.hits[i].recipe.ingredients;
+    const recipeList = distinctIngredient(data.hits);
 
-      //foodIdで重複削除した配列作成githu
-      const distincted = [...new Map(ingredients.map(item => [item["foodId"], item])).values()];
-
-      //材料を更新する
-      data.hits[i].recipe.ingredients = distincted;
-    }
-
-    setRecipes(data.hits);
-    console.log(data.hits);
+    setRecipes(recipeList);
   }
 
   const getSearch = e => {
@@ -43,6 +33,21 @@ function App() {
 
   const updateSearch = e => {
     setSearch(e.target.value);
+  };
+
+  const distinctIngredient = (recipeList) => {
+    for (let i = 0; i < recipeList.length; i++) {
+      // 材料取得
+      const ingredients = recipeList[i].recipe.ingredients;
+
+      // foodIdで重複削除した配列作成githu
+      const distincted = [...new Map(ingredients.map(item => [item["foodId"], item])).values()];
+
+      // 材料を更新する
+      recipeList[i].recipe.ingredients = distincted;
+    }
+
+    return recipeList;
   };
 
   useEffect(() => {
