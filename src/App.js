@@ -18,6 +18,19 @@ function App() {
   const getRecipes = async () => {
     const response = await fetch(`https://api.edamam.com/search?q="${query}"&app_id=${APP_ID}&app_key=${APP_KEY}`);
     const data = await response.json();
+
+    //材料の重複を削除
+    for (let i = 0; i < data.hits.length; i++) {
+      //材料取得
+      const ingredients = data.hits[i].recipe.ingredients;
+
+      //foodIdで重複削除した配列作成githu
+      const distincted = [...new Map(ingredients.map(item => [item["foodId"], item])).values()];
+
+      //材料を更新する
+      data.hits[i].recipe.ingredients = distincted;
+    }
+
     setRecipes(data.hits);
     console.log(data.hits);
   }
