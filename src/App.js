@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import './App.css';
 import Recipe from './Recipe';
 
@@ -15,7 +15,7 @@ function App() {
   const [query, setQuery] = useState('banana');
   const [recipes, setRecipes] = useState([]);
 
-  const getRecipes = async () => {
+  const getRecipes = useCallback(async () => {
     const response = await fetch(`https://api.edamam.com/search?q="${query}"&app_id=${APP_ID}&app_key=${APP_KEY}`);
     const data = await response.json();
 
@@ -23,7 +23,7 @@ function App() {
     const recipeList = distinctIngredient(data.hits);
 
     setRecipes(recipeList);
-  }
+  }, [APP_ID, APP_KEY, query]);
 
   const getSearch = e => {
     e.preventDefault();   // htmlの<form>のaction実行を防止
@@ -52,7 +52,7 @@ function App() {
 
   useEffect(() => {
     getRecipes();
-  }, [query]);
+  }, [query, getRecipes]);
 
   return (
     <div className="App">
