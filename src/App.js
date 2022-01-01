@@ -11,8 +11,12 @@ function App() {
     inputRef.current.focus()
   }, []);
 
-  const [search, setSearch] = useState('');
-  const [query, setQuery] = useState('banana');
+  // 【useState】
+  // Reactのstate機能を関数コンポーネントに追加する
+  // 通常の変数と違い、state変数は関数が終了してもReactによって保持される
+  // - const [state変数, state変数を更新する関数] = useState(state変数の初期値)
+  const [search, setSearch]   = useState('');
+  const [query, setQuery]     = useState('banana');
   const [recipes, setRecipes] = useState([]);
 
   const getRecipes = useCallback(async () => {
