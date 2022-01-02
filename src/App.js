@@ -6,6 +6,10 @@ function App() {
   const APP_ID = process.env.REACT_APP_APP_ID;
   const APP_KEY = process.env.REACT_APP_APP_KEY;
 
+  // 【useRef】
+  // 引数で渡した値を.currentプロパティとして保持したオブジェクトを返す
+  // .currentプロパティは書き換え可能
+  // - const オブジェクト = useRef(初期値)
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus()
@@ -44,7 +48,7 @@ function App() {
       // 材料取得
       const ingredients = recipeList[i].recipe.ingredients;
 
-      // foodIdで重複削除した配列作成githu
+      // foodIdで重複削除した配列作成
       const distincted = [...new Map(ingredients.map(item => [item["foodId"], item])).values()];
 
       // 材料を更新する
