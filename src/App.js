@@ -8,17 +8,23 @@ function App() {
 
   // 【useRef】
   // 引数で渡した値を.currentプロパティとして保持したオブジェクトを返す
-  // .currentプロパティは書き換え可能
-  // - const オブジェクト = useRef(初期値)
+  // 初期値がnullの場合、使用目的がDOM操作となるため、.currentプロパティは書き換え不可
+  // 初期値が具体的な値の場合、.currentプロパティは書き換え可能
+  // - const refオブジェクト = useRef(初期値)
   const inputRef = useRef(null);
+
   useEffect(() => {
-    inputRef.current.focus()
+    focusInput();
   }, []);
+
+  const focusInput = () => {
+    inputRef.current.focus()
+  }
 
   // 【useState】
   // Reactのstate機能を関数コンポーネントに追加する
   // 通常の変数と違い、state変数は関数が終了してもReactによって保持される
-  // - const [state変数, state変数を更新する関数] = useState(state変数の初期値)
+  // - const [state変数, state変数を更新する関数] = useState(state変数の初期値);
   const [search, setSearch]   = useState('');
   const [query, setQuery]     = useState('banana');
   const [recipes, setRecipes] = useState([]);
@@ -66,7 +72,7 @@ function App() {
     <div className="App">
       <form onSubmit={getSearch}>
         <input ref={inputRef} type="text" value={search} onChange={updateSearch} />
-        <button type="submit">検索</button>
+        <button type="submit" onClick={focusInput}>検索</button>
       </form>
       <div>
         {recipes.map(recipe => (
