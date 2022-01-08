@@ -36,6 +36,10 @@ function App() {
   const [query, setQuery]     = useState('banana');
   const [recipes, setRecipes] = useState([]);
 
+  // 【uesCallback】
+  // メモ化したコールバック関数を返す
+  // useEffectと同様、依存配列の要素のいずれかが変化した場合に、メモ化した値が再計算される
+  // - const 変数 = useCallback(() => {コールバック関数}, [依存配列]);
   const getRecipes = useCallback(async () => {
     const response = await fetch(`https://api.edamam.com/search?q="${query}"&app_id=${APP_ID}&app_key=${APP_KEY}`);
     const data = await response.json();
