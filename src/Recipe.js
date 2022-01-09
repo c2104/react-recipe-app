@@ -2,7 +2,7 @@ import React from 'react'
 
 const Recipe = (props) => {
     return (
-        <div>
+        <div className="result-list">
             <h1>{props.title}</h1>
             <ol>
                 {props.ingredients.map((ingredient, i) => {
