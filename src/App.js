@@ -81,11 +81,11 @@ function App() {
 
   return (
     <div className="App">
-      <form onSubmit={getSearch}>
-        <input ref={inputRef} type="text" value={search} onChange={updateSearch} />
-        <button type="submit" onClick={focusInput}>検索</button>
-      </form>
-      <div>
+      <div className='wrapper'>
+        <form onSubmit={getSearch}>
+          <input ref={inputRef} type="text" value={search} onChange={updateSearch} />
+          <button type="submit" onClick={focusInput}>検索</button>
+        </form>
         {recipes.map(recipe => (
           <Recipe
             key={recipe.recipe.uri}
